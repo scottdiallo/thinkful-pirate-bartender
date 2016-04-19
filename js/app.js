@@ -61,11 +61,15 @@ $(document).ready(function () {
 
         console.log(concoction);
 
+        $(".output h3").html("Here be yer poison, ye scurvy dog!");
+
         var buildTheHtmlOutput = "";
         $.each(concoction, function (key, value) {
             buildTheHtmlOutput += "<li>" + value + "</li>";
         });
         $(".output ul").html(buildTheHtmlOutput);
+
+
 
         customerBeverage = drinkNamer(concoction); // name the customer's beverage with drinkNamer();
     });
