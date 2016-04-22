@@ -39,6 +39,7 @@ var drinkNamer = function (concoction) {
 
 $(document).ready(function () {
 
+    $('.output').hide();
     var concoction,
         pantry = {
             strong: ["glug of rum", "slug of whisky", "splash of gin"],
@@ -61,7 +62,9 @@ $(document).ready(function () {
 
         console.log(concoction);
 
-        $(".output h3").html("Here be yer poison, ye scurvy dog!");
+        $('.output').show();
+
+        $(".output h3").html("Here be yer grog, ye scurvy dog!");
 
         var buildTheHtmlOutput = "";
         $.each(concoction, function (key, value) {

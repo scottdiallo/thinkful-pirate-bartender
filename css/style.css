@@ -36,7 +36,17 @@ General styles (General Module, wrapping around the modules bellow)
 (the styles used everywhere in the page (like the Body) or styles which are used in more than 2 of the modules bellow (h2, h3, h4, h5, h6, p, a, ul, li))
 */
 
-body {}
+html {
+    background: rgba(0, 0, 0, 0) url("../images/pirate-bar.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    color: white;
+}
 
 ul,
 ol {
@@ -56,13 +66,20 @@ Content styles (Main Module)
 */
 
 main,
-header {
+header,
+section {
     width: 40%;
     margin: 0 auto;
+    background-image: url("../images/transparent.jpg");
+    border-radius: 0.5rem;
+    padding: 15px;
 }
 
-header {
+header,
+section {
     text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 .formGroup,
@@ -105,7 +122,8 @@ button {
 }
 
 h3 {
-    margin-top: 50px;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
 }
 
 .button,
