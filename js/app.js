@@ -7,13 +7,13 @@ var Order = function (orderValues) {
     this.fruity = orderValues[4];
 };
 
-// Function to generate the random number
-var generateRandomNumber = function (min, max) {
-    //Returns a random integer between min (included) and max (included); Math.floor() will give you a non-uniform distribution!
-    //random number generator details can be found here https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-    return randomNumber;
-}
+var pantry = {
+    strong: ["glug of rum", "slug of whisky", "splash of gin"],
+    salty: ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
+    bitter: ["shake of bitters", "splash of tonic", "twist of lemon peel"],
+    sweet: ["sugar cube", "spoonful of honey", "spash of cola"],
+    fruity: ["slice of orange", "dash of cassis", "cherry on top"]
+};
 
 var Drink = function (pantry, drinkOrder) {
     var ingredientNumber,
@@ -26,30 +26,35 @@ var Drink = function (pantry, drinkOrder) {
         }
     }
     return ingredientsArray;
-
 };
 
+var toTitleCase = function (str) {
+    return str.replace(/\w\S*/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+}
+
+// Function to generate the random number
+var generateRandomNumber = function (min, max) {
+    //Returns a random integer between min (included) and max (included); Math.floor() will give you a non-uniform distribution!
+    //random number generator details can be found here https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    var randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+    return randomNumber;
+}
+
+// use if statements to piece together name conditionally based on the ingredients that comprise it
 var drinkNamer = function (concoction) {
-    // use if statements to piece together name conditionally
-    // based on the ingredients that comprise it
-    /*var adjective = "";
-    var substative = concoction.split(" ");
-    return adjective + substative[substative.length - 1];*/
+    var drinkNamerOutput = concoction[0].split(" ");
+    return toTitleCase(drinkNamerOutput[drinkNamerOutput.length - 1]);
 };
 
 $(document).ready(function () {
 
     $('.output').hide();
-    var concoction,
-        pantry = {
-            strong: ["glug of rum", "slug of whisky", "splash of gin"],
-            salty: ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
-            bitter: ["shake of bitters", "splash of tonic", "twist of lemon peel"],
-            sweet: ["sugar cube", "spoonful of honey", "spash of cola"],
-            fruity: ["slice of orange", "dash of cassis", "cherry on top"]
-        };
+
 
     $('form').on('submit', function (e) {
+
         orderValues = [];
         e.preventDefault();
 
@@ -60,11 +65,8 @@ $(document).ready(function () {
         drinkOrder = new Order(orderValues); // create new order from DOM
         concoction = new Drink(pantry, drinkOrder); // mix drink with Drink constructor
 
-        console.log(concoction);
 
         $('.output').show();
-
-        $(".output h3").html("Here be yer grog, ye scurvy dog!");
 
         var buildTheHtmlOutput = "";
         $.each(concoction, function (key, value) {
@@ -72,8 +74,7 @@ $(document).ready(function () {
         });
         $(".output ul").html(buildTheHtmlOutput);
 
-
-
-        customerBeverage = drinkNamer(concoction); // name the customer's beverage with drinkNamer();
+        // name the customer's beverage with drinkNamer();
+        $(".output h3").html("Here be yer Sparkly " + drinkNamer(concoction) + " Grog, ye scurvy dog!");
     });
 });
