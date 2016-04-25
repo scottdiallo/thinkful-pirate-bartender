@@ -1,3 +1,11 @@
+var pantry = {
+    strong: ["glug of rum", "slug of whisky", "splash of gin"],
+    salty: ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
+    bitter: ["shake of bitters", "splash of tonic", "twist of lemon peel"],
+    sweet: ["sugar cube", "spoonful of honey", "spash of cola"],
+    fruity: ["slice of orange", "dash of cassis", "cherry on top"]
+};
+
 var Order = function (orderValues) {
     // Pulls values from the DOM.
     this.strong = orderValues[0];
@@ -5,14 +13,6 @@ var Order = function (orderValues) {
     this.bitter = orderValues[2];
     this.sweet = orderValues[3];
     this.fruity = orderValues[4];
-};
-
-var pantry = {
-    strong: ["glug of rum", "slug of whisky", "splash of gin"],
-    salty: ["olive on a stick", "salt-dusted rim", "rasher of bacon"],
-    bitter: ["shake of bitters", "splash of tonic", "twist of lemon peel"],
-    sweet: ["sugar cube", "spoonful of honey", "spash of cola"],
-    fruity: ["slice of orange", "dash of cassis", "cherry on top"]
 };
 
 var Drink = function (pantry, drinkOrder) {
@@ -53,25 +53,33 @@ $(document).ready(function () {
     $('.output').hide();
 
 
-    $('form').on('submit', function (e) {
+    $('form').on('submit', function (event) {
 
+        //if the page refreshes when you submit the form use "preventDefault()" to force JavaScript to handle the form submission
+        event.preventDefault();
+
+        //set the empty orderValues array
         orderValues = [];
-        e.preventDefault();
 
+        //check if the each one of the ingredient types have been chosen and that to the orderValues array;
         $('select').each(function () {
             orderValues.push($(this).val() === 'yes' ? true : false);
         });
 
+        //use the 2 constructors to create 2 new objects
         drinkOrder = new Order(orderValues); // create new order from DOM
         concoction = new Drink(pantry, drinkOrder); // mix drink with Drink constructor
 
-
-        $('.output').show();
-
+        //build the chosen ingredients from the ingredients array
         var buildTheHtmlOutput = "";
         $.each(concoction, function (key, value) {
             buildTheHtmlOutput += "<li>" + value + "</li>";
         });
+
+        //show the output container
+        $('.output').show();
+
+        //populate it with the ingredients
         $(".output ul").html(buildTheHtmlOutput);
 
         // name the customer's beverage with drinkNamer();
